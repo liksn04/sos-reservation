@@ -513,3 +513,19 @@ select:focus {
     padding: 0.5rem;
     border-radius: 6px;
 }
+
+.delete-res-btn {
+    margin-top: 0.6rem;
+    background: #fee2e2;
+    color: #ef4444;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+.delete-res-btn:hover {
+    background: #fecaca;
+    transform: translateY(-1px);
+}

@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -207,7 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="schedule-purpose">
                     ${res.purpose}
                 </div>
+                <button class="delete-res-btn" data-id="${res.id}">
+                    <i class="fa-solid fa-trash-can"></i> 예약 취소
+                </button>
             `;
+
+            // Add Event Listener for Delete Button
+            const deleteBtn = item.querySelector('.delete-res-btn');
+            deleteBtn.addEventListener('click', () => handleDeleteReservation(res.id, res.teamName));
 
             reservationsList.appendChild(item);
         });
@@ -223,7 +230,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeModal() {
         reservationModal.classList.remove('active');
         reservationForm.reset();
+
+        // Reset time selects logic
+        startTimeSelect.value = "10:00";
+        endTimeSelect.value = "11:00";
+
         document.body.style.overflow = 'auto';
+    }
+
+    async function handleDeleteReservation(id, teamName) {
+        if (confirm(`정말로 [${teamName}] 팀의 예약을 취소하시겠습니까?`)) {
+            try {
+                // Delete from Firestore
+                await deleteDoc(doc(db, "reservations", id));
+                // Note: No need to manually refresh the UI or array!
+                // The onSnapshot listener will detect the deletion and call renderCalendar / updateScheduleView automatically.
+            } catch (e) {
+                console.error("Error removing document: ", e);
+                alert('예약 취소에 실패했습니다. 네트워크 연결을 확인해주세요.');
+            }
+        }
     }
 
     async function handleReservationSubmit(e) {
