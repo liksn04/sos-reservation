@@ -255,8 +255,8 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -269,9 +269,30 @@ button {
     font-weight: 600;
 }
 
+/* Scrollable Container for many reservations */
 .timeline-container {
     position: relative;
-    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Custom Scrollbar */
+.timeline-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.timeline-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.timeline-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .empty-state {
@@ -425,11 +446,24 @@ select:focus {
     .day-cell {
         min-height: 60px;
         padding: 0.3rem;
+        /* Prevent overflow internally */
+        overflow: hidden;
     }
 
     .res-indicator {
         font-size: 0.65rem;
-        padding: 0.1rem 0.2rem;
+        padding: 0.2rem;
+        margin-top: 2px;
+        /* Stack nicely */
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+
+    .timeline-container {
+        max-height: 450px;
     }
 
     .modal-container {
@@ -476,7 +510,7 @@ select:focus {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
 .schedule-item-header {
@@ -508,24 +542,31 @@ select:focus {
 
 .schedule-purpose {
     font-size: 0.9rem;
-    margin-top: 0.3rem;
-    background: rgba(0, 0, 0, 0.02);
-    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 0.6rem;
     border-radius: 6px;
+    font-weight: 500;
+    color: #374151;
 }
 
 .delete-res-btn {
-    margin-top: 0.6rem;
-    background: #fee2e2;
+    align-self: flex-end;
+    /* Align right to stand out */
+    background: rgba(239, 68, 68, 0.1);
     color: #ef4444;
     padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
     font-weight: 600;
-    align-self: flex-start;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    transition: all 0.2s ease;
 }
 
 .delete-res-btn:hover {
-    background: #fecaca;
-    transform: translateY(-1px);
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
 }
