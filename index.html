@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빛소리 동아리방 예약 신청</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <h1>빛소리 동아리방 <span>예약 신청</span></h1>
+                </div>
+                <div class="month-nav">
+                    <button id="prevMonth" class="icon-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <h2 id="currentMonthYear">2026년 3월</h2>
+                    <button id="nextMonth" class="icon-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <button id="quickReserveBtn" class="primary-btn">
+                    <i class="fa-solid fa-plus"></i> 예약하기
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="main-layout">
+            <!-- Left: Calendar View -->
+            <section class="calendar-section glass-card">
+                <div class="weekdays">
+                    <div>일</div>
+                    <div>월</div>
+                    <div>화</div>
+                    <div>수</div>
+                    <div>목</div>
+                    <div>금</div>
+                    <div>토</div>
+                </div>
+                <div id="calendarGrid" class="calendar-grid">
+                    <!-- Calendar days will be injected via JS -->
+                </div>
+            </section>
+
+            <!-- Right: Daily Schedule View -->
+            <section class="schedule-section glass-card">
+                <div class="schedule-header">
+                    <h3 id="selectedDateTitle">3월 1일 (일)</h3>
+                    <span class="badge">예약 내역</span>
+                </div>
+                <div class="timeline-container">
+                    <div id="timelineGrid" class="timeline-grid">
+                        <!-- Timeline intervals will be injected via JS, e.g. 09:00 to 22:00 -->
+                    </div>
+                    <div id="reservationsList" class="reservations-list">
+                        <!-- Daily reservations will appear here -->
+                        <div class="empty-state">
+                            <i class="fa-regular fa-calendar-xmark"></i>
+                            <p>이 날은 예약이 없습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="modal-overlay hidden">
+        <div class="modal-container glass-card">
+            <div class="modal-header">
+                <h2>새로운 예약</h2>
+                <button id="closeModalBtn" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="reservationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="resDate">이용 날짜</label>
+                        <input type="date" id="resDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">시작 시간</label>
+                        <input type="time" id="startTime" min="09:00" max="22:00" step="1800" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">종료 시간</label>
+                        <input type="time" id="endTime" min="09:00" max="22:00" step="1800" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="teamName">팀명 (소속)</label>
+                        <input type="text" id="teamName" placeholder="예: 개발동아리 알파" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">예약자 이름</label>
+                        <input type="text" id="userName" placeholder="홍길동" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="peopleCount">사용 인원수</label>
+                        <input type="number" id="peopleCount" min="1" max="50" placeholder="예: 5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">연락처</label>
+                        <input type="tel" id="contact" placeholder="010-0000-0000" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">사용 목적</label>
+                    <textarea id="purpose" rows="2" placeholder="정기 회의 및 스터디" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="secondary-btn">취소</button>
+                    <button type="submit" class="primary-btn">예약 완료</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
