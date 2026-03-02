@@ -39,8 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelBtn = document.getElementById('cancelBtn');
     const reservationForm = document.getElementById('reservationForm');
     const resDateInput = document.getElementById('resDate');
+    const startTimeSelect = document.getElementById('startTime');
+    const endTimeSelect = document.getElementById('endTime');
 
     // === Initialization ===
+    populateTimeOptions();
     renderCalendar();
     updateScheduleView(selectedDate);
     setupRealtimeListener();
@@ -67,6 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
     reservationForm.addEventListener('submit', handleReservationSubmit);
 
     // === Firebase Functions ===
+
+    // Initialize Time Dropdowns (30-min intervals)
+    function populateTimeOptions() {
+        const times = [];
+        for (let h = 9; h <= 22; h++) {
+            const hour = String(h).padStart(2, '0');
+            times.push(`${hour}:00`);
+            if (h !== 22) { // 22:30 제외
+                times.push(`${hour}:30`);
+            }
+        }
+
+        times.forEach(time => {
+            startTimeSelect.add(new Option(time, time));
+            endTimeSelect.add(new Option(time, time));
+        });
+
+        // Default values
+        startTimeSelect.value = "10:00";
+        endTimeSelect.value = "11:00";
+    }
 
     // Listen to real-time updates from Firestore
     function setupRealtimeListener() {
@@ -179,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="schedule-meta">
                     <span><i class="fa-regular fa-user"></i> ${res.userName} (${res.peopleCount}명)</span>
-                    <span><i class="fa-solid fa-phone"></i> ${res.contact}</span>
                 </div>
                 <div class="schedule-purpose">
                     ${res.purpose}
@@ -237,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
             teamName: document.getElementById('teamName').value,
             userName: document.getElementById('userName').value,
             peopleCount: document.getElementById('peopleCount').value,
-            contact: document.getElementById('contact').value,
             purpose: document.getElementById('purpose').value,
             createdAt: new Date().toISOString()
         };

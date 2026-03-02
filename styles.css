@@ -1,5 +1,6 @@
 :root {
-    --primary-gradient: linear-gradient(135deg, #a8cbfb, #eac1ee, #fbe7b7); /* Gemini-like pastel gradient */
+    --primary-gradient: linear-gradient(135deg, #a8cbfb, #eac1ee, #fbe7b7);
+    /* Gemini-like pastel gradient */
     --accent-color: #6d83f2;
     --text-main: #2c3e50;
     --text-muted: #6b7280;
@@ -28,10 +29,24 @@ body {
     padding: 2rem;
 }
 
+@media (max-width: 600px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+}
+
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .app-container {
@@ -68,6 +83,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .logo {
@@ -115,13 +132,13 @@ button {
     align-items: center;
     justify-content: center;
     color: var(--text-main);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .icon-btn:hover {
     background: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
 }
 
 .primary-btn {
@@ -143,7 +160,7 @@ button {
 }
 
 .secondary-btn {
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.05);
     color: var(--text-main);
     padding: 0.7rem 1.5rem;
     border-radius: 30px;
@@ -151,7 +168,7 @@ button {
 }
 
 .secondary-btn:hover {
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 /* Main Layout */
@@ -240,7 +257,7 @@ button {
     align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .badge {
@@ -298,7 +315,8 @@ button {
 .modal-container {
     width: 100%;
     max-width: 600px;
-    background: rgba(255, 255, 255, 0.85); /* Slightly less transparent for readability */
+    background: rgba(255, 255, 255, 0.85);
+    /* Slightly less transparent for readability */
     transform: translateY(20px);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -335,18 +353,31 @@ button {
     color: #4b5563;
 }
 
-input, textarea {
+input,
+textarea,
+select {
     width: 100%;
     padding: 0.8rem 1rem;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    background: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.7);
     font-family: inherit;
     font-size: 0.95rem;
     transition: var(--transition);
+    appearance: none;
+    /* Make select look consistent */
 }
 
-input:focus, textarea:focus {
+select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
     outline: none;
     border-color: var(--accent-color);
     background: #fff;
@@ -358,6 +389,67 @@ input:focus, textarea:focus {
     justify-content: flex-end;
     gap: 1rem;
     margin-top: 2rem;
+}
+
+/* Mobile-Specific Overrides */
+@media (max-width: 600px) {
+
+    .glass-header,
+    .glass-card {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+        flex: 1 1 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .month-nav h2 {
+        font-size: 1.1rem;
+        min-width: 110px;
+    }
+
+    .primary-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .calendar-section,
+    .schedule-section {
+        padding: 1rem 0.5rem;
+    }
+
+    .day-cell {
+        min-height: 60px;
+        padding: 0.3rem;
+    }
+
+    .res-indicator {
+        font-size: 0.65rem;
+        padding: 0.1rem 0.2rem;
+    }
+
+    .modal-container {
+        max-width: 95%;
+        padding: 1.2rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 0;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .day-number {
+        font-size: 0.8rem;
+    }
 }
 
 /* Reservation Indicators in Calendar */
@@ -381,7 +473,7 @@ input:focus, textarea:focus {
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
@@ -417,7 +509,7 @@ input:focus, textarea:focus {
 .schedule-purpose {
     font-size: 0.9rem;
     margin-top: 0.3rem;
-    background: rgba(0,0,0,0.02);
+    background: rgba(0, 0, 0, 0.02);
     padding: 0.5rem;
     border-radius: 6px;
 }
